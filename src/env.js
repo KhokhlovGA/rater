@@ -11,10 +11,8 @@ export const env = createEnv({
       process.env.NODE_ENV === "production"
         ? z.string()
         : z.string().optional(),
-
     EMAIL_SERVER: z.string(),
     EMAIL_FROM: z.string(),
-
     DATABASE_URL: z.string().url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
