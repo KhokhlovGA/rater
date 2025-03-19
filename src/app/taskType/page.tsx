@@ -1,8 +1,8 @@
-
+import React from "react";
 import { db } from "~/server/db";
-import { AddUser } from "../_components/user/addUser";
-import UserTable from "../_components/user/userTable";
 import Pagination from "../ui/pagination";
+import TaskTypeTable from "../_components/taskType/table";
+import { AddTaskGroup } from "../_components/taskType/add";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -14,20 +14,19 @@ export default async function Page(props: {
   const page = Number(searchParams?.page) || 1;
   const size = Number(searchParams?.size) || 3;
 
-  const count = await db.user.count();
-  const users = await db.user.findMany({
+  const count = await db.taskType.count();
+  const taskGroups = await db.taskType.findMany({
     skip: (page - 1) * size,
     take: size,
   });
+
   const pages = Math.ceil(Number(count) / size);
-  // const users = await db.user.findMany();
 
   return (
-    <>
-      <h1>User page</h1>
-      <AddUser />
-      <UserTable users={users} />
+    <div>
+      <AddTaskGroup />
+      <TaskTypeTable tasks={taskGroups} />
       <Pagination totalPages={pages} />
-    </>
+    </div>
   );
 }
